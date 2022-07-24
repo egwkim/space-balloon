@@ -6,10 +6,20 @@
 
 Install requirements
 
+This project needs following python packages:  
+`ecmwflibs eccodes cfgrib matplotlib xarray`
+
+Install packages
+
 ```
 pip install ecmwflibs eccodes cfgrib matplotlib xarray
 ```
 
+You can use requirements.txt
+
+```
+pip install -r requirements.txt
+```
 
 ---
 
@@ -17,7 +27,13 @@ pip install ecmwflibs eccodes cfgrib matplotlib xarray
 
 ### Downloading data
 
-Downloads latest data from https://nomads.ncep.noaa.gov
+Create data directory
+
+```
+mkdir data
+```
+
+Download the latest data from https://nomads.ncep.noaa.gov
 
 ```
 python download_data.py
@@ -30,6 +46,16 @@ python download_data.py -d YYYYMMDD -t hh
 ```
 
 Only 00, 06, 12, 18 are available for the time argument.
+
+Use `python download_data.py -h` for more information.
+
+### Reading data file
+
+```
+python read_data.py
+```
+
+This python script reads data from selected data file and plot pressure-temperature graph. You can specify latitude and longitude.
 
 ---
 
