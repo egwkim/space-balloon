@@ -7,14 +7,9 @@
 Install requirements
 
 ```
-pip install cfgrib matplotlib xarray
+pip install ecmwflibs eccodes cfgrib matplotlib xarray
 ```
 
-Or
-
-```
-pip install -r requirements.txt
-```
 
 ---
 
