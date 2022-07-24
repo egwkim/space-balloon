@@ -2,22 +2,45 @@ import numpy as np
 import xarray as xr
 import matplotlib.pyplot as plt
 import os
-import sys
+
+
+def get_data_path(filename: str = None, date=None, time=None, n: int = None):
+    if not filename:
+        # Get filename from date, time, and n
+        if None in (date, time):
+            # Not enough arguments
+            raise ValueError('Not enough arguments.')
+        # Get file extension
+        if n is None:
+            ext = 'anl'
+        else:
+            ext = f'f{n:03d}'
+        filename = f'{date}{time}.{ext}'
+
+    filepath = os.path.join('data', filename)
+    if not os.path.isfile(filepath):
+        raise FileNotFoundError(f'{filepath} is not found.')
+    return filepath
+
+
+def get_recent_data_path():
+    # Get sorted list of files in data directory
+    files = sorted(filter(os.path.isfile,
+                          map(lambda x: os.path.join('data', x), os.listdir('data'))))
+    if not files:
+        raise FileNotFoundError('Data directory is empty.')
+    filepath = files[-1]
+    return filepath
 
 
 def main():
     # Select data file
     filename = input('File name: ')
-    filepath = os.path.join('data', filename)
-    if not os.path.isfile(filepath):
-        try:
-            # If file is not found, use the latest data in the data directory
-            filepath = os.path.join('data', sorted(os.listdir('data'))[-1])
-            print(f'Using {filepath} since {filename} is not found')
-        except IndexError:
-            # Data directory is empty
-            print('No data file found')
-            sys.exit(1)
+    try:
+        filepath = get_data_path(filename)
+    except ValueError:
+        filepath = get_recent_data_path()
+        print(f'Using {filepath} since {filename} is not found')
 
     ds = xr.open_dataset(filepath, engine='cfgrib',
                          backend_kwargs={'errors': 'ignore', 'indexpath': ''},

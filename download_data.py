@@ -10,7 +10,7 @@ def get_data(date: Union[int, str], time: Union[int, str], number: Union[int, No
     Get atmos data from https://nomads.ncep.noaa.gov
     """
     BUFFER_SIZE = 256*1024
-    if number != None:
+    if number is not None:
         ext = f'f{number:03d}'
     else:
         ext = 'anl'
@@ -37,7 +37,6 @@ def get_data(date: Union[int, str], time: Union[int, str], number: Union[int, No
                 print(f'{len(chunk)}, total {size}')
     if log:
         print(filename, size)
-            
 
 
 def get_latest_data(number: Union[int, None] = None, log: bool = False):
@@ -70,7 +69,7 @@ if __name__ == '__main__':
     parser.add_argument('-t', '--time', default=None,
                         help="Time, only 00, 06, 12, 18 are available")
     parser.add_argument('-n', '--number', default=None)
-    parser.add_argument('-q','--quite', action='store_true')
+    parser.add_argument('-q', '--quite', action='store_true')
     args = parser.parse_args()
     if args.number != None:
         args.number = int(args.number)
