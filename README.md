@@ -21,6 +21,12 @@ You can use requirements.txt
 pip install -r requirements.txt
 ```
 
+Optional: Install jupyter to run ipynb files.
+
+```
+pip install jupyter
+```
+
 ---
 
 ## Usage

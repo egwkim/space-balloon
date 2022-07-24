@@ -3,3 +3,6 @@ data/
 
 # Python venv
 .venv/
+
+# Python
+*.py[cod]
