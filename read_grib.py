@@ -4,7 +4,8 @@ import matplotlib.pyplot as plt
 import os
 import sys
 
-if __name__ == '__main__':
+
+def main():
     # Select data file
     filename = input('File name: ')
     filepath = os.path.join('data', filename)
@@ -44,3 +45,7 @@ if __name__ == '__main__':
     # Plot pressure - temperature graph
     plt.plot(ds['isobaricInhPa'], ds['t'])
     plt.show()
+
+
+if __name__ == '__main__':
+    main()
