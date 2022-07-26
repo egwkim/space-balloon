@@ -69,7 +69,7 @@ def get_latest_data(number: Union[int, None] = None, log: bool = False):
     get_data(date, time, number, log)
 
 
-if __name__ == '__main__':
+def main():
     import argparse
     parser = argparse.ArgumentParser(
         description="Download atmos data from https://nomads.ncep.noaa.gov and save it to data directory",
@@ -87,3 +87,7 @@ if __name__ == '__main__':
         get_latest_data(args.number, not args.quite)
     else:
         get_data(args.date, args.time, args.number, not args.quite)
+
+
+if __name__ == '__main__':
+    main()
