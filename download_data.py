@@ -31,7 +31,7 @@ def get_data(date: Union[int, str], time: Union[int, str], number: Union[int, No
         res = urllib.request.urlopen(url)
     except urllib.error.HTTPError as e:
         if log:
-            print(e)
+            print('HTTP Error occured. This might be caused by incorrect arguments.')
         raise e
     size = 0
     with open(filepath, 'wb') as f:
