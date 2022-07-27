@@ -26,7 +26,8 @@ def get_data(date: Union[int, str], time: Union[int, str], number: Union[int, No
     filename = f'{date}{time}.{ext}'
     filepath = os.path.join('data', filename)
     if os.path.exists(filepath):
-        raise FileExistsError(errno.ENOENT, os.strerror(errno.ENOENT), filepath)
+        raise FileExistsError(
+            errno.ENOENT, os.strerror(errno.ENOENT), filepath)
 
     url = fr'https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl?file=gfs.t{time}z.pgrb2.0p25.{ext}&lev_1000_mb=on&lev_100_mb=on&lev_10_m_above_ground=on&lev_10_mb=on&lev_150_mb=on&lev_15_mb=on&lev_1_mb=on&lev_200_mb=on&lev_20_mb=on&lev_250_mb=on&lev_2_mb=on&lev_300_mb=on&lev_30_mb=on&lev_350_mb=on&lev_3_mb=on&lev_400_mb=on&lev_40_mb=on&lev_450_mb=on&lev_500_mb=on&lev_50_mb=on&lev_550_mb=on&lev_5_mb=on&lev_600_mb=on&lev_650_mb=on&lev_700_mb=on&lev_70_mb=on&lev_750_mb=on&lev_7_mb=on&lev_800_mb=on&lev_850_mb=on&lev_900_mb=on&lev_925_mb=on&lev_950_mb=on&lev_975_mb=on&var_ABSV=on&var_DZDT=on&var_HGT=on&var_RH=on&var_SPFH=on&var_TMP=on&var_UGRD=on&var_VGRD=on&var_VVEL=on&subregion=&leftlon=124&rightlon=132&toplat=38&bottomlat=33&dir=%2Fgfs.{date}%2F{time}%2Fatmos'
     if log:
@@ -58,6 +59,11 @@ def get_latest_data(number: Union[int, None] = None, log: bool = False):
     """
     Get latest atmos data from https://nomads.ncep.noaa.gov
     """
+    date, time = get_latest_data_time(log)
+    return get_data(date, time, number, log)
+
+
+def get_latest_data_time(log: bool = False):
     now = datetime.datetime.utcnow()
     for i in range(4):
         date = now.strftime('%Y%m%d')
@@ -72,8 +78,7 @@ def get_latest_data(number: Union[int, None] = None, log: bool = False):
             break
         except (urllib.error.HTTPError, FileNotFoundError) as e:
             now -= datetime.timedelta(hours=6)
-
-    return get_data(date, time, number, log)
+    return date, time
 
 
 def main():
